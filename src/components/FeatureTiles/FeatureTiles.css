@@ -1,0 +1,34 @@
+.feature-tiles-container {
+  text-align: center; 
+}
+.feature-tiles-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+.feature-tile {
+  width: 30%;
+  text-align: left;
+}
+.tile-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #eee;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.view-more-container {
+  width: 100%;
+  margin-top: 20px;
+}
+.view-more-btn {
+  padding: 10px 20px;
+  background-color: #333;
+  color: white;
+  border: none;
+  cursor: pointer;
+}

@@ -1,0 +1,21 @@
+.promo-block {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 50px;
+}
+.promo-image {
+  width: 40%;
+  aspect-ratio: 1 / 1; 
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #eee;
+}
+.promo-text {
+  width: 60%;
+}
+.promo-text h2 {
+  margin-top: 0;
+  font-size: 2em;
+}

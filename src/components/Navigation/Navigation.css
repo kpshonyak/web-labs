@@ -1,0 +1,20 @@
+.main-nav-bar {
+  background-color: #333;
+  padding: 10px 20px;
+}
+.main-nav-bar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 30px;
+}
+.main-nav-bar a {
+  color: white;
+  text-decoration: none;
+  padding: 5px 10px;
+}
+.main-nav-bar a.active {
+  font-weight: bold;
+  border-bottom: 2px solid #007bff;
+}

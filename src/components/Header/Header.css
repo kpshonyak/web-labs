@@ -1,0 +1,20 @@
+.site-header {
+  background-color: #4a4a4a;
+  color: white;
+  padding: 10px 20px;
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo-img {
+  max-width: 150px; 
+  height: 150px; 
+  display: block;
+  margin: -10px;
+}
+.site-title {
+  font-size: 0.9em;
+  color: #ccc;
+}
