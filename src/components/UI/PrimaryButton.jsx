@@ -10,9 +10,9 @@ const buttonStyle = {
   fontWeight: 'bold',
 };
 
-const PrimaryButton = ({ children, onClick, style = {} }) => {
+const PrimaryButton = ({ children, onClick, style = {}, type = 'button' }) => {
   return (
-    <button style={{ ...buttonStyle, ...style }} onClick={onClick}>
+    <button type={type} style={{ ...buttonStyle, ...style }} onClick={onClick}>
       {children}
     </button>
   );
