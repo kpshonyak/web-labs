@@ -11,6 +11,7 @@ import Footer from './components/Footer/Footer';
 
 import CatalogPage from './pages/CatalogPage';
 import ItemPage from './pages/ItemPage'; 
+import CartPage from './pages/CartPage';
 
 const HomePage = () => (
     <main className="main-content-area">
@@ -31,11 +32,7 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/catalog" element={<CatalogPage />} />
             <Route path="/item/:id" element={<ItemPage />} /> 
-            <Route path="/cart" element={
-              <main className="main-content-area">
-                  <h2>Shopping Cart Page</h2>
-              </main>
-            } />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
           
           <Footer />
