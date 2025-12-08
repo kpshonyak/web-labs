@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, CLEAR_CART } from './actions';
+import { ADD_ITEM, REMOVE_ITEM, DELETE_ITEM, CLEAR_CART,LOAD_CART } from './actions';
 
 const savedCart = JSON.parse(localStorage.getItem('cart'));
 const initialState = savedCart || {
@@ -85,6 +85,12 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         items: [],
         totalQuantity: 0,
+      };
+    case LOAD_CART: 
+      return {
+        ...state,
+        items: action.payload.items,
+        totalQuantity: action.payload.totalQuantity,
       };
 
     default:

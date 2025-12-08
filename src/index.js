@@ -6,8 +6,14 @@ import './index.css';
 import App from './App';
 
 store.subscribe(() => {
-  const cartState = store.getState().cart;
-  localStorage.setItem('cart', JSON.stringify(cartState));
+  const state = store.getState().cart;
+  const currentUser = localStorage.getItem('user_email');
+
+  if (currentUser) {
+    localStorage.setItem(`cart_${currentUser}`, JSON.stringify(state));
+  } else {
+    localStorage.setItem('cart_guest', JSON.stringify(state));
+  }
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -18,4 +24,3 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
