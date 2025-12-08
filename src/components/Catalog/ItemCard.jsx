@@ -1,55 +1,54 @@
 import React from 'react';
-import PrimaryButton from '../UI/PrimaryButton';
 import { Link } from 'react-router-dom';
+import PrimaryButton from '../UI/PrimaryButton';
 
-const itemCardStyle = {
-  border: '1px solid #ccc',
-  padding: '15px',
-  borderRadius: '4px',
-  boxShadow: '0 2px 5px rgba(0, 0, 0, 0.05)',
-  width: 'calc(25% - 15px)',
-  textAlign: 'left',
-  marginBottom: '20px',
-};
+const ItemCard = ({ item, coefficients }) => {
+  let priceDisplay = `$${item.price}`;
+  
+  if (coefficients) {
+    const minPrice = Math.round(item.price * coefficients.front);
+    const maxPrice = Math.round(item.price * coefficients.back);
+    priceDisplay = `$${minPrice} - $${maxPrice}`;
+  }
 
-const imagePlaceholderStyle = {
-  width: '100%',
-  aspectRatio: '1 / 1',
-  backgroundColor: '#eee',
-  marginBottom: '10px',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  fontSize: '1.5em',
-  color: '#aaa',
-};
-
-const ItemCard = ({ item }) => {
-  const formatNumber = (num) => {
-    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  const itemCardStyle = {
+    width: 'calc(25% - 15px)', 
+    border: '1px solid #e0e0e0',
+    borderRadius: '8px',
+    padding: '15px',
+    boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
   };
 
   return (
     <div style={itemCardStyle}>
-      <div style={imagePlaceholderStyle}>
-        <p>Poster</p>
+      <div style={{ width: '100%', aspectRatio: '1/1', backgroundColor: '#f0f0f0', marginBottom: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#aaa' }}>
+        Poster
       </div>
       
-      <h3>{item.title}</h3> 
-      
-      <p style={{ fontSize: '0.9em', color: '#666', height: '90px', overflow: 'hidden' }}>
-        {item.description}
-      </p>
-      
-      <div style={{ marginBottom: '15px', fontSize: '0.9em' }}>
-        <p>Reviews: {formatNumber(item.imdbReviews)}</p>
-        <p>Genre: {item.genre || 'N/A'}</p>
+      <div>
+        <h3 style={{ margin: '0 0 10px 0', fontSize: '1.1em' }}>{item.title}</h3>
+        <p style={{ fontWeight: 'bold', color: '#28a745', fontSize: '1.1em', margin: '5px 0' }}>
+           {priceDisplay}
+        </p>
+
+        <p style={{ fontSize: '0.9em', color: '#666', marginBottom: '5px' }}>
+            Reviews: {item.imdbReviews.toLocaleString()}
+        </p>
+        <p style={{ fontSize: '0.9em', color: '#666' }}>Genre: {item.genre}</p>
       </div>
-      <Link to={`/item/${item.id}`} style={{ textDecoration: 'none' }}>
-        <PrimaryButton style={{ width: '100%' }}>
-          View more
-        </PrimaryButton>
-      </Link>
+
+      <div style={{ marginTop: '15px' }}>
+        <Link to={`/item/${item.id}`} style={{ textDecoration: 'none' }}>
+          <PrimaryButton style={{ width: '100%', padding: '10px' }}>
+            View More
+          </PrimaryButton>
+        </Link>
+      </div>
     </div>
   );
 };

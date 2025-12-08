@@ -4,6 +4,7 @@ import PrimaryButton from '../components/UI/PrimaryButton';
 import Select from '../components/UI/Select';
 import Loader from '../components/UI/Loader'; 
 import { useFilms } from '../context/FilmContext'; 
+import { fetchCoefficients } from '../services/api';
 
 const catalogContainerStyle = { 
   padding: '20px',
@@ -32,13 +33,16 @@ const CatalogPage = () => {
   const { fetchFilms } = useFilms(); 
   
   const [films, setFilms] = useState([]); 
+  const [coefficients, setCoefficients] = useState(null);
+
   const [isLoading, setIsLoading] = useState(false); 
   const [error, setError] = useState(null); 
+
   const [genreFilter, setGenreFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortType, setSortType] = useState('default');
   
-  const loadFilms = useCallback(async () => {
+  const loadData = useCallback(async () => {
     setIsLoading(true);
     setError(null);
 
@@ -48,37 +52,39 @@ const CatalogPage = () => {
     };
 
     if (sortType === 'reviews_desc') {
-      filters.sort = 'imdbReviews'; 
-      filters.order = 'desc';       
+      filters.sort = 'imdbReviews';
+      filters.order = 'desc';
     } else if (sortType === 'reviews_asc') {
       filters.sort = 'imdbReviews';
-      filters.order = 'asc';       
-    } 
-
-    else if (sortType === 'title_asc') {
+      filters.order = 'asc';
+    } else if (sortType === 'title_asc') {
       filters.sort = 'title';
       filters.order = 'asc';
     }
 
     try {
-      const fetchedFilms = await fetchFilms(filters);
+      const [fetchedFilms, fetchedCoeffs] = await Promise.all([
+        fetchFilms(filters),
+        fetchCoefficients()
+      ]);
+      
       setFilms(fetchedFilms);
+      setCoefficients(fetchedCoeffs);
+
     } catch (err) {
       setError(err.message || 'Failed to fetch data.');
       setFilms([]); 
     } finally {
       setIsLoading(false);
     }
-  }, [genreFilter, searchQuery, sortType, fetchFilms]); 
-
+  }, [genreFilter, searchQuery, sortType, fetchFilms]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      loadFilms();
+      loadData();
     }, 500);
     return () => clearTimeout(timer);
-  }, [loadFilms]); 
-
+  }, [loadData]); 
 
   const genreOptions = [
     { value: 'all', label: 'All Genres' },
@@ -90,9 +96,9 @@ const CatalogPage = () => {
 
   const sortOptions = [
     { value: 'default', label: 'Default Sorting' },
-    { value: 'reviews_desc', label: 'Reviews: High to Low' }, 
-    { value: 'reviews_asc', label: 'Reviews: Low to High' },  
-    { value: 'title_asc', label: 'Title: A-Z' },              
+    { value: 'reviews_desc', label: 'Reviews: High to Low' },
+    { value: 'reviews_asc', label: 'Reviews: Low to High' },
+    { value: 'title_asc', label: 'Title: A-Z' },
   ];
   
   return (
@@ -101,19 +107,16 @@ const CatalogPage = () => {
 
       <div style={controlsBar}>
         <div style={{ display: 'flex', gap: '15px', alignItems: 'center', flexWrap: 'wrap'}}>
-          
           <Select 
             options={genreOptions} 
             value={genreFilter} 
             onChange={(e) => setGenreFilter(e.target.value)} 
           />
-          
           <Select 
             options={sortOptions} 
             value={sortType} 
             onChange={(e) => setSortType(e.target.value)} 
           />
-
           <input
             type="text"
             placeholder="Search by Title..."
@@ -121,23 +124,18 @@ const CatalogPage = () => {
             onChange={(e) => setSearchQuery(e.target.value)}
             style={{ padding: '10px', border: '1px solid #ccc', borderRadius: '4px', minWidth: '200px' }}
           />
-
         </div>
-        <PrimaryButton onClick={loadFilms}>Refresh</PrimaryButton>
+        <PrimaryButton onClick={loadData}>Refresh</PrimaryButton>
       </div>
 
       {isLoading && <Loader />} 
       
       {error && <p style={{ color: 'red', textAlign: 'center' }}>Error: {error}</p>}
       
-      {!isLoading && !error && films.length === 0 && (
-        <p style={{ textAlign: 'center', padding: '50px' }}>No films found matching your criteria.</p>
-      )}
-
       {!isLoading && films.length > 0 && (
         <div style={itemsGrid}>
           {films.map((film) => (
-            <ItemCard key={film.id} item={film} />
+            <ItemCard key={film.id} item={film} coefficients={coefficients} />
           ))}
         </div>
       )}
