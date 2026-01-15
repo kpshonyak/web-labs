@@ -1,0 +1,24 @@
+body {
+  background-color: #fef8f5;
+  font-family: "Rubik", sans-serif;
+  font-size: 18px;
+  line-height: 40px;
+  color: #402B2B;
+  overflow-x: hidden; 
+}
+
+.default__heading {
+  font-weight: 700;
+  font-size: 24px;
+  color: #EE4D47;
+}
+
+.container {
+  max-width: 1285px;
+  margin: 0 auto;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden; 
+}

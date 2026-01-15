@@ -1,0 +1,28 @@
+button {
+  transition: transform 0.3s, background 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background: #d43a33;
+}
+
+.client__card {
+  opacity: 0.8;
+  transition: all 0.6s ease-in-out;
+}
+
+.client__card:hover {
+  opacity: 1;
+  transform: translateY(-10px);
+}
+
+@keyframes moveCar {
+  0% { transform: translateX(-200px); }
+  50% { transform: translateX(50px); }
+  100% { transform: translateX(0); }
+}
+
+.car {
+  animation: moveCar 3s ease-in-out infinite alternate;
+}

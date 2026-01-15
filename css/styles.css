@@ -1,0 +1,7 @@
+@import "./normalize.css";
+
+@import "./base.css";
+@import "./header.css";
+@import "./sections.css";
+@import "./footer.css";
+@import "./animations.css";
